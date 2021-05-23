@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="directory"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{anime?.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-segment
+    value="all"
+    color="primary"
+    mode="ios"
+    [(ngModel)]="segmentModel"
+    (ionChange)="segmentChanged($event)"
+  >
+    <ion-segment-button value="informacion">
+      <ion-label>Informacion</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="episodios">
+      <ion-label>Episodios</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngIf="segmentModel === 'informacion'">
+    <div class="info_container">
+      <div class="banner">
+        <img [src]="anime?.banner" [alt]="anime?.title" />
+        <div class="bg-dark"></div>
+      </div>
+      <div class="details container">
+        <img [src]="anime?.img" [alt]="anime?.title" class="portada" />
+        <div class="target">
+          <div class="title">
+            <ion-icon name="language"></ion-icon> {{anime?.title}}
+          </div>
+          <div class="status">
+            <ion-icon name="play"></ion-icon> {{anime?.status}}
+          </div>
+          <div class="date">
+            <ion-icon name="calendar"></ion-icon> {{anime?.date}}
+          </div>
+          <div class="add_fav" (click)="toggleFavorite()">
+            <div *ngIf="fav == true; else nofav" class="fav">
+              <ion-icon name="heart" class="fav-active"></ion-icon>
+              <h6 class="fav-active">Favorito</h6>
+            </div>
+            <ng-template #nofav class="fav">
+              <div class="nofav">
+                <ion-icon name="heart-outline" class="fav-inactive"></ion-icon>
+                <h6>Agregar a favoritos</h6>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content_container">
+      <div class="genders">
+        <div class="gender-container">
+          <button
+            size="small"
+            class="gender"
+            [routerLink]="['/gender/' + g.id]"
+            *ngFor="let g of anime?.genders"
+          >
+            {{g.title}}
+          </button>
+        </div>
+      </div>
+      <div class="sinopsis">
+        <div class="title_sinopsis">Sinopsis</div>
+        <p class="text">{{anime?.description}}</p>
+      </div>
+      <div class="title_suggestions">Sugerencias</div>
+      <div class="anime-carousel">
+        <div
+          class="anime-card-carousel"
+          *ngFor="let a of  anime?.sugestions"
+          [routerLink]="['/anime/'+ a.id]"
+        >
+          <div class="portada">
+            <img [src]="a.img" />
+            <div class="anime_name">{{a.title}}</div>
+            <div class="anime_info">{{a.category}} <mark>{{a.year}}</mark></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="segmentModel === 'episodios'">
+    <div class="episodes">
+      <div class="title_episodes">Episodioss</div>
+      <div
+        class="episode"
+        [routerLink]="['/ver', e.id]"
+        *ngFor="let e of anime?.episodes"
+      >
+        <img [src]="anime?.banner" alt="" />
+        <div class="ep_number">Episodio {{e.episode}}</div>
+      </div>
+      <div *ngIf="anime?.episodes == 0" class="episode">
+        No hay capitulos disponibles
+      </div>
+    </div>
+  </div>
+</ion-content>

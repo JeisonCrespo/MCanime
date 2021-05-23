@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimeI } from 'src/app/models/anime';
-import { LocalStorageService } from 'src/app/services/localStorage.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-favorites',
