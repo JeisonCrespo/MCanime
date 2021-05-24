@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from './localStorage.service';
 import { AnimeI } from '../models/anime';
 
 @Injectable({
